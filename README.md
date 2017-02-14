@@ -1,0 +1,1 @@
+# Asset for Public Cloud

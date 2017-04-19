@@ -22,13 +22,13 @@ Run cmd:
 
 ###Step 4: Create MySQL server instance.
 
-Obtain following parameters: MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE
+Obtain following parameters: MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE, (optional)MYSQL_PORT
 
 ###Step 5: Setup database.  
 
 Run cmd:
 
-<pre><code>mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE < magento_sample_data_for_1.9.1.0.sql</code></pre>
+<pre><code>mysql -h $MYSQL_HOST -P$MYSQL_PORT -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE < magento_sample_data_for_1.9.1.0.sql</code></pre>
 
 ###Step 6: Run Docker instance from the image.  
 

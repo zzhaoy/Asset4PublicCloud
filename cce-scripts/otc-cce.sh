@@ -21,6 +21,10 @@ echo $TOKEN
 #########  get app id  ####### 
 echo -e "CCE app id: $1"
 echo -e "CCE cluster id: $2"
+### get cluster credentials ###
+echo "get credentials of cluster $2"
+curl -v -k https://cce.$com/api/v1/clusters/$2/certificates -H "Content-Type:application/json" -H "X-Auth-Token:$TOKEN"
+
 ### create rc ###
 curl -i -k -X POST https://cce.$com/api/v1/namespaces/default/replicationcontrollers -H "Content-Type:application/json" -H "X-Auth-Token:$TOKEN" -H "X-Cluster-UUID:$2" -d "{\"metadata\":{\"name\":\"rc$1\",\"labels\":{\"cce\/appgroup\":\"app$1\"}},\"apiVersion\":\"v1\",\"kind\":\"ReplicationController\",\"spec\":{\"template\":{\"metadata\":{\"name\":\"rc$1\",\"labels\":{\"cce\/appgroup\":\"app$1\"}},\"spec\":{\"containers\":[{\"image\":\"nginx\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"nginx\",\"ports\":[{\"protocol\":\"TCP\",\"containerPort\":80}]}]}},\"replicas\":2,\"selector\":{\"cce\/appgroup\":\"app$1\"}}}"
 curl -i -k -X POST https://cce.$com/api/v1/namespaces/default/services -H "Content-Type:application/json" -H "X-Auth-Token:$TOKEN" -H "X-Cluster-UUID:$2" -d "{\"metadata\":{\"name\":\"service$1\"},\"apiVersion\":\"v1\",\"kind\":\"Service\",\"spec\":{\"selector\":{\"cce\/appgroup\":\"app$1\"},\"type\":\"NodePort\",\"ports\":[{\"protocol\":\"TCP\",\"port\":80,\"targetPort\":80,\"nodePort\":3000$1}]}}"
